@@ -1,0 +1,293 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('/img/disnara.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.kanban {
+    display: flex;
+    gap: 50px;
+    padding: 24px;
+    width: 100%;
+    height: 90vh;
+    overflow-x: auto;
+}
+
+.kanban-column {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    height: 100%;
+    overflow-y: auto;
+    background-color: transparent;
+    backdrop-filter: blur(18px);
+    border-radius: 12px;
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+    padding: 12px;
+    overflow: hidden;
+    position: relative;
+    min-width: 252px;
+    --cor-coluna: #00662c;
+}
+
+.kanban-column::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    display: block;
+    background-color: var(--cor-coluna, #00662c);
+}
+
+.kanban-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.kanban-title h2 {
+    font-size: 18px;
+    color: #c5c5c5;
+    font-weight: 600;
+}
+
+.add-card {
+    color: #c5c5c5;
+    font-size: 20px;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+}
+
+.kanban-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.kanban-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-color: #c5c5c5;
+    border-radius: 14px;
+    padding: 10px;
+    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.badge {
+    color: #ffffff;
+    width: fit-content;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 12px;
+}
+
+.badge.high {
+    background-color: #f30808;
+}
+
+.badge.medium {
+    background-color: #fea065;
+}
+
+.badge.low {
+    background-color: #35552d;
+}
+
+.card-infos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-icons {
+    display: flex;
+    gap: 18px;
+}
+
+.card-icons i {
+    color: #0c0c58;
+}
+
+.user img {
+    width: 42px;
+    height: 42px;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+.dragging {
+    opacity: 0.5;
+}
+
+.cards-hover {
+    background-color: transparent;
+    border-radius: 8px;
+}
+
+*::-webkit-scrollbar {
+    width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background-color: #eaeffa;
+    border-radius: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #b7d3fb;
+    border-radius: 20px;
+}
+
+/* ================= MODAL ================= */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(6px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+
+    padding: 24px;
+    border-radius: 16px;
+    width: 300px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    box-shadow: 0px 10px 20px rgba(0,0,0,0.3);
+}
+
+.modal-content h2 {
+    color: #fff;
+}
+
+.modal-content input {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+
+    background-color: #c5c5c5;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-actions button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.modal-actions button:first-child {
+    background-color: #c5c5c5;
+    color: #000000;
+}
+
+.modal-actions button:hover:first-child {
+    background-color: transparent;
+    transition: 0.5s;
+    backdrop-filter: blur(20px);
+}
+
+
+.modal-actions button:last-child {
+    background-color: #c5c5c5;   
+}
+
+.modal-actions button:last-child:hover {
+    background-color: transparent;
+    transition: 0.5s;
+    backdrop-filter: blur(20px);
+}
+
+.modal-actions button:nth-child(2) {
+    background-color: #f30808;
+    color: #000000;
+}
+
+.modal-actions button:nth-child(2):hover {
+    background-color: transparent;
+    color: #000000;
+    transition: 0.5s;
+}
+
+.kanban-title button:last-child {
+    color: #f30808;
+    background-color: transparent;
+    border: none;
+}
+
+.kanban-column {
+    cursor: grab;
+}
+
+.kanban-column:active {
+    cursor: grabbing;
+}
+
+.kanban-column {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dragging-column {
+    transform: scale(1.05);
+    z-index: 10;
+    position: relative;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+.column-button {
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    color: #c5c5c5;
+    font-size: 20px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.column-button:hover {
+    background-color: transparent;
+    color: #ffffff;
+    transition: 0.5s;
+    border-color: #ffffff;
+}

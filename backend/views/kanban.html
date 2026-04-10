@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="stylesheet" href="/stylekanban.css">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <title>Kanban</title>
+</head>
+<body>
+
+    
+    <main class="kanban"></main>
+
+    
+    <button onclick="abrirModalColuna()" style="position: fixed; bottom: 20px; right: 20px;" class="column-button">
+        + Coluna
+    </button>
+
+    
+    <script src="/scriptkanban.js"></script>
+
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Editar Card</h2>
+
+            <input type="text" id="modal-input" placeholder="Título do card">
+            <input type="text" id="coluna-nome" placeholder="Nome da coluna">
+            <input type="color" id="coluna-cor" value="#00662c">
+
+            <div class="modal-actions">
+                <button onclick="salvarEdicao()">Salvar</button>
+                <button onclick="deletarCard()">Excluir</button>
+                <button onclick="fecharModal()">Voltar</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
