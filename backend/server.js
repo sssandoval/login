@@ -50,7 +50,7 @@ app.post("/login", (req, res) => {
             if (row.senha === senha) {
                 req.session.usuario = usuario;
 
-                console.log("Usuário logado com sucesso", usuario);
+                console.log("Usuário logado com sucesso:", usuario);
                 return res.redirect("/kanban");
             } else {
                 console.log("Senha incorreta", usuario);
@@ -71,7 +71,9 @@ app.get("/kanban", (req, res) => {
 
 // logout
 app.get("/logout", (req, res) => {
+    const usuario = req.session.usuario;
     req.session.destroy(() => {
+        console.log(`[LOGOUT] ${new Date().toISOString()} - Usuário: ${usuario}`);
         res.redirect("/");
     });
 });

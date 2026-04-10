@@ -219,7 +219,7 @@ async function carregarColunas() {
 
                 <div style="display:flex; gap:10px;">
                     <button class="add-card" onclick="criarCard(${coluna.id})">+</button>
-                    <button onclick="deletarColuna(${coluna.id})">🗑</button>
+                    <button class="btn-trash" onclick="deletarColuna(${coluna.id})"><i class="fa-solid fa-trash"></i></button>
                 </div>
             </div>
 

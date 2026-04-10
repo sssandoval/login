@@ -250,6 +250,7 @@ body {
     background-color: transparent;
     color: #000000;
     transition: 0.5s;
+    backdrop-filter: blur(20px);
 }
 
 .kanban-title button:last-child {
@@ -284,10 +285,41 @@ body {
     padding: 10px 16px;
     border-radius: 8px;
     cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
 }
 .column-button:hover {
     background-color: transparent;
     color: #ffffff;
     transition: 0.5s;
     border-color: #ffffff;
+    transform: scale(1.2)
+}
+
+.btn-trash {
+    transition: transform 0.2s ease, color 0.2s ease;
+    cursor: pointer;
+}
+
+.btn-trash:hover {
+    transform: scale(1.2) rotate(-10deg);
+    color: #e74c3c;
+}
+
+.btn-trash:active {
+    transform: scale(0.9);
+}
+
+.add-card {
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+    cursor: pointer;
+}
+
+.add-card:hover {
+    transform: scale(1.5);
+    background-color: transparent;
+    color: white;
+}
+
+.add-card:active {
+    transform: scale(0.9);
 }
