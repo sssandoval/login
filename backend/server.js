@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "login.html"));
 });
 
-// login
+// verificação de login
 app.post("/login", (req, res) => {
     const { usuario, senha } = req.body;
 
@@ -34,12 +34,15 @@ app.post("/login", (req, res) => {
             if (err) return res.send("Erro");
 
             if (!row) {
+                console.log("Usuário não encontrado", usuario);
                 return res.sendFile(path.join(__dirname, "public", "notfound.html"));
             }
 
             if (row.senha === senha) {
+                console.log("Usuário logado com sucesso", usuario + " - Senha: " + senha);                
                 return res.sendFile(path.join(__dirname, "public", "logado.html"));
             } else {
+                console.log("Usuário ou senha incorreto", usuario, senha);
                 return res.sendFile(path.join(__dirname, "public", "incorrect.html"));
             }
         }
@@ -48,20 +51,37 @@ app.post("/login", (req, res) => {
 
 // register
 app.get("/register", (req, res) => {
+    console.log("Acessando página de registro");
     res.sendFile(path.join(__dirname, "public", "register.html"));
 });
 
-// salvar usuário
+// salvar usuário e verificar se já existe
 app.post("/register", (req, res) => {
     const { usuario, senha } = req.body;
 
-    db.run(
-        "INSERT INTO usuarios (usuario, senha) VALUES (?, ?)",
-        [usuario, senha],
-        function (err) {
+    db.get(
+        "SELECT * FROM usuarios WHERE usuario = ?",
+        [usuario],
+        (err, row) => {
             if (err) return res.send("Erro");
 
-        res.sendFile(path.join(__dirname, "public", "created.html"));
+            //se o usuário já existe
+            if (row) {
+                console.log("Usuário já existe", usuario);
+                return res.sendFile(path.join(__dirname, "public", "exists.html"));
+            }
+
+            // Usuário não existe → pode cadastrar
+            db.run(
+                "INSERT INTO usuarios (usuario, senha) VALUES (?, ?)",
+                [usuario, senha],
+                function (err) {
+                    if (err) return res.send("Erro");
+
+                    console.log("Usuário registrado com sucesso", usuario);
+                    return res.sendFile(path.join(__dirname, "public", "created.html"));
+                }
+            );
         }
     );
 });
