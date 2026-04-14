@@ -7,7 +7,7 @@ const app = express();
 
 // middlewares
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json()); // 🔥 necessário para PUT
+app.use(express.json()); // necessário para PUT
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(session({
@@ -143,12 +143,15 @@ app.get("/colunas", verificarLogin, (req, res) => {
 
 // CRIAR CARD
 app.post("/cards", verificarLogin, (req, res) => {
-    const { titulo, descricao, coluna_id } = req.body;
+    const { titulo, descricao, coluna_id, data_fim } = req.body;
     const usuario = req.session.usuario;
 
+    const criado_em = new Date().toISOString();
+
     db.run(
-        "INSERT INTO cards (titulo, descricao, coluna_id, usuario) VALUES (?, ?, ?, ?)",
-        [titulo, descricao, coluna_id, usuario],
+        `INSERT INTO cards (titulo, descricao, coluna_id, usuario, criado_em, data_fim) 
+         VALUES (?, ?, ?, ?, ?, ?)`,
+        [titulo, descricao, coluna_id, usuario, criado_em, data_fim],
         function (err) {
             if (err) return res.send("Erro");
 
@@ -174,16 +177,17 @@ app.get("/cards", verificarLogin, (req, res) => {
 
 // ATUALIZAR CARD (drag and drop / edição)
 app.put("/cards/:id", verificarLogin, (req, res) => {
-    const { titulo, descricao, coluna_id } = req.body;
+    const { titulo, descricao, coluna_id, data_fim } = req.body;
     const usuario = req.session.usuario;
 
-    db.run(
-        `UPDATE cards 
-         SET titulo = COALESCE(?, titulo),
-             descricao = COALESCE(?, descricao),
-             coluna_id = COALESCE(?, coluna_id)
-         WHERE id = ? AND usuario = ?`,
-        [titulo, descricao, coluna_id, req.params.id, usuario],
+db.run(
+    `UPDATE cards 
+     SET titulo = COALESCE(?, titulo),
+         descricao = COALESCE(?, descricao),
+         coluna_id = COALESCE(?, coluna_id),
+         data_fim = COALESCE(?, data_fim)
+     WHERE id = ? AND usuario = ?`,
+    [titulo, descricao, coluna_id, data_fim, req.params.id, usuario],
         function (err) {
             if (err) return res.send("Erro");
 

@@ -37,11 +37,29 @@
             <input type="text" id="modal-input" placeholder="Título do card">
             <input type="text" id="coluna-nome" placeholder="Nome da coluna">
             <input type="color" id="coluna-cor" value="#00662c">
+            <input type="date" id="card-data-fim">
 
             <div class="modal-actions">
                 <button onclick="salvarEdicao()">Salvar</button>
                 <button onclick="deletarCard()">Excluir</button>
                 <button onclick="fecharModal()">Voltar</button>
+
+                <!-- FORM CARD -->
+                <div id="form-card" style="display:none;">
+                    <h2>Novo Card</h2>
+
+                    <input type="text" id="card-titulo" placeholder="Título do card">
+
+                    <textarea id="card-descricao" placeholder="Descrição (opcional)"></textarea>
+
+                    <label>Data de entrega</label>
+                    <input type="date" id="card-data-fim">
+
+                    <div class="modal-actions">
+                        <button onclick="salvarEdicao()">Salvar</button>
+                        <button onclick="fecharModal()">Cancelar</button>
+                    </div>
+                </div>
         </div>
     </div>
 </div>

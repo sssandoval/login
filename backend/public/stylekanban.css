@@ -323,3 +323,71 @@ body {
 .add-card:active {
     transform: scale(0.9);
 }
+
+.card-footer {
+    margin-top: 10px;
+    font-size: 9px;
+    display: flex;
+    justify-content: space-between;
+    color: #777;
+}
+
+.card-atrasado {
+    background-color: #ffe5e5;
+    border-left: 5px solid #e74c3c;
+}
+
+
+.card-atrasado p {
+    color: #c0392b;
+}
+
+/* modal inputs */
+.modal-content input,
+.modal-content textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    outline: none;
+    font-size: 14px;
+}
+
+/* textarea */
+.modal-content textarea {
+    min-height: 80px;
+    resize: none;
+}
+
+/* foco bonito */
+.modal-content input:focus,
+.modal-content textarea:focus {
+    border-color: #2ecc71;
+    box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
+}
+
+/* botões */
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.modal-actions button {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+/* salvar */
+.modal-actions button:first-child {
+    background-color: #2ecc71;
+    color: white;
+}
+
+/* cancelar */
+.modal-actions button:last-child {
+    background-color: #eee;
+}

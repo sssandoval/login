@@ -116,15 +116,18 @@ document.addEventListener("drop", async e => {
 // MODAL
 
 
-function abrirModal(id, titulo) {
+function abrirModal(id, titulo, dataFim) {
     modoModal = "card";
 
     document.getElementById("modal").classList.remove("hidden");
+
     document.getElementById("modal-input").style.display = "block";
     document.getElementById("coluna-nome").style.display = "none";
     document.getElementById("coluna-cor").style.display = "none";
 
     document.getElementById("modal-input").value = titulo;
+    document.getElementById("card-data-fim").value = dataFim || "";
+
     cardEditandoId = id;
 }
 
@@ -151,6 +154,7 @@ function fecharModal() {
 async function salvarEdicao() {
     if (modoModal === "card") {
         const novoTitulo = document.getElementById("modal-input").value;
+        const dataFim = document.getElementById("card-data-fim").value;
 
         if (!novoTitulo) return;
 
@@ -159,7 +163,7 @@ async function salvarEdicao() {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            body: `titulo=${novoTitulo}`
+            body: `titulo=${novoTitulo}&data_fim=${dataFim}`
         });
     }
 
@@ -267,12 +271,14 @@ async function criarCard(coluna_id) {
     const titulo = prompt("Título do card:");
     if (!titulo) return;
 
+    const dataFim = prompt("Data de entrega (YYYY-MM-DD):");
+
     await fetch("/cards", {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: `titulo=${titulo}&coluna_id=${coluna_id}`
+        body: `titulo=${titulo}&coluna_id=${coluna_id}&data_fim=${dataFim || ""}`
     });
 
     carregarColunas();
@@ -284,14 +290,23 @@ async function carregarCards() {
 
     cards.forEach(card => {
         const cardDiv = document.createElement("div");
-
+            if (estaAtrasado(card.data_fim)) {
+                cardDiv.classList.add("card-atrasado");
+}
         cardDiv.classList.add("kanban-card");
         cardDiv.setAttribute("draggable", "true");
         cardDiv.dataset.id = card.id;
 
-        cardDiv.innerHTML = `<p>${card.titulo}</p>`;
+        cardDiv.innerHTML = `
+            <p>${card.titulo}</p>
 
-        cardDiv.onclick = () => abrirModal(card.id, card.titulo);
+            <div class="card-footer">
+                <small>Criado: ${formatarData(card.criado_em)}</small>
+                ${card.data_fim ? `<small>Prazo: ${formatarData(card.data_fim)}</small>` : ""}
+            </div>
+        `;
+
+        cardDiv.onclick = () => abrirModal(card.id, card.titulo, card.data_fim);
 
         const coluna = document.querySelector(
             `.kanban-cards[data-id="${card.coluna_id}"]`
@@ -301,4 +316,24 @@ async function carregarCards() {
     });
 }
 
+function formatarData(data) {
+    if (!data) return "";
+
+    const d = new Date(data);
+    return d.toLocaleDateString("pt-BR");
+}
+
+
+function estaAtrasado(dataFim) {
+    if (!dataFim) return false;
+
+    const hoje = new Date();
+    const prazo = new Date(dataFim);
+
+
+    hoje.setHours(0,0,0,0);
+    prazo.setHours(0,0,0,0);
+
+    return prazo < hoje;
+}
 carregarColunas();
